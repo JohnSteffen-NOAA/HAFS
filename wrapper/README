@@ -1,0 +1,26 @@
+This dir currently contains example job card driver scripts (on Hera) to run
+the HAFS uncoupled or ocean coupled workflow outside of the rocoto workflow.
+
+The following tasks can be run sequentially/concurrently (see the notes below).
+A. Run the launch job to set up the experiment/cycle configuration and directories
+sbatch jobcard_launch.sh 
+B. Run the atm_prep job to create or copy pre-generated grid, orography, and surface climatology files
+sbatch jobcard_atm_prep.sh 
+
+Note: Tasks C, D, and E can be run concurrently
+C. Run the ocn_prep job to generate ocean initial condition and forcings
+sbatch jobcard_ocn_prep.sh
+D. Run the atm_ic job to generate atmosphere initial conditions
+sbatch jobcard_atm_ic.sh
+E. Run the atm_lbc job to generate atmosphere lateral boundary conditions
+sbatch jobcard_atm_lbc.sh
+
+Note: Tasks F, G, H, and I can be run concurrently
+F. Run the forecast job
+sbatch jobcard_forecast.sh jobcard_atm_post.sh jobcard_ocn_post.sh jobcard_product.sh
+G. Run the atm_post job
+sbatch jobcard_atm_post.sh
+H. Run the ocn_post job
+sbatch jobcard_ocn_post.sh
+I. Run the product job
+sbatch jobcard_product.sh
